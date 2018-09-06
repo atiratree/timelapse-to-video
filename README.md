@@ -1,7 +1,11 @@
 # Timelapse to Video
 
 ## Installation
-Install [ffmpeg](http://ffmpeg.org/) with [libx265 support](https://trac.ffmpeg.org/wiki/Encode/H.265#Gettingffmpegwithlibx265support) (for `--x265` option)
+- Install [ffmpeg](http://ffmpeg.org/) with [libx265 support](https://trac.ffmpeg.org/wiki/Encode/H.265#Gettingffmpegwithlibx265support) (for `--x265` option)
+- `pip install astral` (pip3)
+- Install [python 3](https://www.python.org/downloads/)
+- `git clone https://github.com/suomiy/timelapse-to-video`
+- Make symbolic link `timelapse-to-video.py -> timelapse-to-video`
 
 ## Usage
 
