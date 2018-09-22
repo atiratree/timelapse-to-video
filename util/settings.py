@@ -11,6 +11,9 @@ class DefaultSettings:
     output_filename = None
     input_dir = None
 
+    audio_file = None
+    audio_start = 0.0
+
     image_extension = 'jpg'
     output_extension = 'mkv'
     encoder = 'x264'
@@ -38,6 +41,9 @@ class Settings:
                  output_filename=DefaultSettings.output_filename,
                  input_dir=DefaultSettings.input_dir,
 
+                 audio_file=DefaultSettings.audio_file,
+                 audio_start=DefaultSettings.audio_start,
+
                  image_extension=DefaultSettings.image_extension,
                  output_extension=DefaultSettings.output_extension,
                  encoder=DefaultSettings.encoder,
@@ -59,6 +65,9 @@ class Settings:
 
         self.output_filename = output_filename
         self.input_dir = input_dir
+
+        self.audio_file = audio_file
+        self.audio_start = audio_start
 
         self.image_extension = image_extension
         self.output_extension = output_extension

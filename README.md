@@ -60,26 +60,30 @@ optional arguments:
   -f [FRAMERATE], --framerate [FRAMERATE]
                         how many images per second should be rendered (default
                         30).
-  -s [IMAGE_EXTENSION], --extension [IMAGE_EXTENSION]
+  -a [AUDIO_FILE], --audio [AUDIO_FILE]
+                        audio file for the video
+  -s [AUDIO_START], --audio_start [AUDIO_START]
+                        where should the audio start (default 0.0)
+  -e [IMAGE_EXTENSION], --extension [IMAGE_EXTENSION]
                         input images extension (default jpg).
   -x [ENCODING_QUALITY], --x265 [ENCODING_QUALITY]
                         use x265 encoder with preset 0-8
                         (ultrafast:low_quality-veryslow:high_quality) (default
                         x264 encoder with preset 5 ).
-  -a [LATITUDE], --latitude [LATITUDE]
+  -l [LATITUDE], --latitude [LATITUDE]
                         needed for "-n" option; used for calculating sun's
                         position (default 49.1951).
   -g [LONGITUDE], --longitude [LONGITUDE]
                         needed for "-n" option; used for calculating sun's
                         position (default 16.6068).
-  -e [ELEVATION], --elevation [ELEVATION]
+  -v [ELEVATION], --elevation [ELEVATION]
                         needed for "-n" option; used for calculating sun's
                         position (default 237); in meters.
   -t [TIMEZONE], --timezone [TIMEZONE]
                         needed for "-n" option; used for calculating sun's
                         position (default Europe/Prague).
   -j [THREADS], --jobs [THREADS]
-                        default 8
+                        default 8.
 ```
 
 note: you can also write your options to `DefaultSettings` in `util/settings.py` :)

@@ -1,6 +1,6 @@
 import argparse
 from util.settings import Settings, DefaultSettings
-from util.utils import realpath, is_dir, input_exist, filename_and_extension
+from util.utils import realpath, is_dir, is_file, input_exist, filename_and_extension
 
 
 class ArgParser:
@@ -32,7 +32,16 @@ class ArgParser:
                             required=False, const=True, default=DefaultSettings.framerate,
                             help=f'how many images per second should be rendered (default {DefaultSettings.framerate}).')
 
-        parser.add_argument('-s', '--extension', type=str, nargs='?',
+        parser.add_argument('-a', '--audio', type=str, nargs='?',
+                            dest='audio_file',
+                            required=False, const=True, default=DefaultSettings.audio_file,
+                            help=f'audio file for the video')
+        parser.add_argument('-s', '--audio_start', type=ArgParser._positive_float, nargs='?',
+                            dest='audio_start',
+                            required=False, const=True, default=DefaultSettings.audio_start,
+                            help=f'where should the audio start (default {DefaultSettings.audio_start})')
+
+        parser.add_argument('-e', '--extension', type=str, nargs='?',
                             dest='image_extension',
                             required=False, const=True, default=DefaultSettings.image_extension,
                             help=f'input images extension (default {DefaultSettings.image_extension}).')
@@ -42,7 +51,7 @@ class ArgParser:
                             required=False, const=True, default=None,
                             help=f'use x265 encoder with preset 0-8 (ultrafast:low_quality-veryslow:high_quality) (default {DefaultSettings.encoder} encoder with preset {DefaultSettings.encoding_quality} ).')
 
-        parser.add_argument('-a', '--latitude', type=float, nargs='?',
+        parser.add_argument('-l', '--latitude', type=float, nargs='?',
                             dest='latitude',
                             required=False, const=True, default=DefaultSettings.latitude,
                             help=f'needed for "-n" option; used for calculating sun\'s position (default {DefaultSettings.latitude}).')
@@ -50,7 +59,7 @@ class ArgParser:
                             dest='longitude',
                             required=False, const=True, default=DefaultSettings.longitude,
                             help=f'needed for "-n" option; used for calculating sun\'s position (default {DefaultSettings.longitude}).')
-        parser.add_argument('-e', '--elevation', type=float, nargs='?',
+        parser.add_argument('-v', '--elevation', type=float, nargs='?',
                             dest='elevation',
                             required=False, const=True, default=DefaultSettings.elevation,
                             help=f'needed for "-n" option; used for calculating sun\'s position (default {DefaultSettings.elevation}); in meters.')
@@ -74,12 +83,16 @@ class ArgParser:
         output_file = ArgParser._proccess_filename(args.OUTPUT)
         encoder, encoding_quality = ArgParser._resolver_encoding(args.encoding_quality)
 
+        audio_file = ArgParser._proccess_file(args.audio_file)
+
         return Settings(
             skip_over_exposed_images=args.skip_over_exposed_images,
             skip_dark_images=args.skip_dark_images,
             skip_images_without_natural_light=args.skip_images_without_natural_light,
             input_dir=input_dir,
             output_filename=output_file,
+            audio_file=audio_file,
+            audio_start=args.audio_start,
             image_extension=args.image_extension,
             framerate=args.framerate,
             latitude=args.latitude,
@@ -97,12 +110,24 @@ class ArgParser:
         directory = realpath(directory)
 
         if not is_dir(directory):
-            raise argparse.ArgumentTypeError(f'{directory} is no an existing directory!')
+            raise argparse.ArgumentTypeError(f'{directory} is not an existing directory!')
 
         if not input_exist(directory, extension):
             raise argparse.ArgumentTypeError(f'No files with {extension} extension exits in {directory}')
 
         return directory
+
+    @staticmethod
+    def _proccess_file(file):
+        try:
+            f = realpath(file)
+        except Exception:
+            return None
+
+        if not is_file(f):
+            raise argparse.ArgumentTypeError(f'{file} is not an existing file!')
+
+        return f
 
     @staticmethod
     def _proccess_filename(filename):
@@ -122,20 +147,39 @@ class ArgParser:
 
     @staticmethod
     def _positive_int(v):
+        def fail():
+            raise argparse.ArgumentTypeError('Positive Integer value expected.')
+
         try:
             result = int(v)
             if result < 0:
-                raise argparse.ArgumentTypeError('Positive Integer value expected.')
+                fail()
             return result
         except Exception:
-            raise argparse.ArgumentTypeError('Positive Integer value expected.')
+            fail()
+
+    @staticmethod
+    def _positive_float(v):
+        def fail():
+            raise argparse.ArgumentTypeError('Positive Float value expected.')
+
+        try:
+            result = float(v)
+            if result < 0:
+                fail()
+            return result
+        except Exception:
+            fail()
 
     @staticmethod
     def _x265_preset_int(v):
+        def fail():
+            raise argparse.ArgumentTypeError('Integer 0-8 expected.')
+
         try:
             result = int(v)
             if result < 0 or result > 8:
-                raise argparse.ArgumentTypeError('Integer 0-8 expected.')
+                fail()
             return result
         except Exception:
-            raise argparse.ArgumentTypeError('Integer 0-8 expected.')
+            fail()

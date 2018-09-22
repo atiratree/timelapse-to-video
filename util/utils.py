@@ -15,6 +15,10 @@ def is_dir(directory):
     return os.path.isdir(directory) and os.path.exists(directory)
 
 
+def is_file(file):
+    return os.path.isfile(file) and os.path.exists(file)
+
+
 def input_exist(directory, extension):
     for file in os.listdir(directory):
         if file.endswith(extension):
