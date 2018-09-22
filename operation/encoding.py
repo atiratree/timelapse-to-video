@@ -23,7 +23,7 @@ def encode_video(settings):
     if encoder != 'x264' and encoder != 'x265':
         eprint(f'invalid encoder {encoder}')
 
-    options = build_options(settings)
+    options = _build_options(settings)
     print(f'running ffmpeg in {settings.link_dir}')
     pprint(options)
 
@@ -36,7 +36,7 @@ def encode_video(settings):
             eprint(e)
 
 
-def build_options(settings):
+def _build_options(settings):
     inputs = []
     options = []
 
@@ -76,6 +76,7 @@ def build_options(settings):
         options.extend([
             '-c:a', 'aac',
             '-b:a', '320k',
+            '-filter_complex', ' [1:0] apad ',  # pad with silence when audio input is too short
             '-shortest'
         ])
 

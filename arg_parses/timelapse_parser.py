@@ -13,7 +13,7 @@ class ArgParser:
                                                ' - images have to be numbered in "abc123.jpg" format\n'
                                                ' - skip unfitting images with "-w" "-b" "-n" options')
         parser.add_argument('INPUT_DIR', help=f'input directory with images')
-        parser.add_argument('OUTPUT', help=f'output file which will be saved to mkv format')
+        parser.add_argument('OUTPUT', help=f'output file which will be saved in mkv format')
 
         parser.add_argument('-w', '--skip_over_exposed_images', action='store_true',
                             dest='skip_over_exposed_images',

@@ -87,3 +87,24 @@ optional arguments:
 ```
 
 note: you can also write your options to `DefaultSettings` in `util/settings.py` :)
+
+
+There is also a short script `add-audio-to-video.py` just for changing the audio track.
+
+```
+usage: add-audio-to-video.py [OPTIONS] VIDEO_INPUT AUDIO_INPUT OUTPUT
+
+ - adds audio from AUDIO_INPUT to VIDEO_INPUT
+
+positional arguments:
+  VIDEO_INPUT           video file
+  AUDIO_INPUT           audio file
+  OUTPUT                output file which will be saved in mkv format
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s [AUDIO_START], --audio_start [AUDIO_START]
+                        where should the audio start (default 0.0)
+  -j [THREADS], --jobs [THREADS]
+                        default 8.
+```

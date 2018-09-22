@@ -19,6 +19,9 @@ class DefaultSettings:
     encoder = 'x264'
     encoding_quality = 5
 
+    # encoder = 'x265'
+    # encoding_quality = 4
+
     framerate = 30
     threads = 8
 
