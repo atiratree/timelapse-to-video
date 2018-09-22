@@ -1,5 +1,5 @@
 import argparse
-from util.settings import Settings, DefaultSettings
+from settings.timelapse_settings import Settings, DefaultSettings
 from util.utils import realpath, is_dir, is_file, input_exist, filename_and_extension
 
 

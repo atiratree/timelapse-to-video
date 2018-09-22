@@ -2,7 +2,7 @@
 
 from argparse import ArgumentTypeError
 from util.utils import eprint
-from util.arg_parser import ArgParser
+from arg_parses.timelapse_parser import ArgParser
 from operation.file import process_input_files
 from operation.encoding import encode_video
 
