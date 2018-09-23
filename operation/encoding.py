@@ -82,7 +82,7 @@ def _build_options(settings):
 
     result = [
         'ffmpeg',
-        '-loglevel', 'level+fatal',
+        '-loglevel', 'fatal',
         '-stats'
     ]
     result.extend(inputs)
