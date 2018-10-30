@@ -38,6 +38,7 @@ def encode_video(settings):
 
 def _build_options(settings):
     inputs = []
+    global_options = []
     options = []
 
     if settings.framerate < 15:
@@ -49,6 +50,12 @@ def _build_options(settings):
     else:
         record_rate = settings.framerate
 
+    global_options.extend([
+        '-framerate', str(settings.framerate),
+        '-loglevel', 'fatal',
+        '-stats'
+    ])
+
     # add video options
     inputs.extend([
         '-pattern_type', 'glob',
@@ -58,7 +65,6 @@ def _build_options(settings):
     options.extend([
         '-c:v', f'lib{settings.encoder}',
         '-r', str(record_rate),
-        '-framerate', str(settings.framerate),
         '-pix_fmt', 'yuv420p',
         '-preset', presets[settings.encoding_quality],
     ])
@@ -82,9 +88,9 @@ def _build_options(settings):
 
     result = [
         'ffmpeg',
-        '-loglevel', 'fatal',
-        '-stats'
     ]
+
+    result.extend(global_options)
     result.extend(inputs)
     result.extend(options)
     result.append(settings.get_output_filename_with_extension())
