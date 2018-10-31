@@ -44,7 +44,7 @@ usage: timelapse-to-video.py [OPTIONS] INPUT_DIR OUTPUT
 
 positional arguments:
   INPUT_DIR             input directory with images
-  OUTPUT                output file which will be saved to mkv format
+  OUTPUT                output file which will be saved in mkv format
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -70,6 +70,8 @@ optional arguments:
                         use x265 encoder with preset 0-8
                         (ultrafast:low_quality-veryslow:high_quality) (default
                         x264 encoder with preset 5 ).
+  -z [LAST_FRAME_FREEZE], --last-frame-freeze [LAST_FRAME_FREEZE]
+                        freeze last frame of video (default 0.0 sec)
   -l [LATITUDE], --latitude [LATITUDE]
                         needed for "-n" option; used for calculating sun's
                         position (default 49.1951).

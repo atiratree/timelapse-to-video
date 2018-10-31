@@ -3,12 +3,14 @@
 from argparse import ArgumentTypeError
 from util.utils import eprint
 from arg_parses.timelapse_parser import ArgParser
-from operation.file import process_input_files
+from operation.file import process_input_files, repeat_last_frame
 from operation.encoding import encode_video
 
 
 def run(settings):
     process_input_files(settings)
+    if settings.last_frame_freeze > 0:
+        repeat_last_frame(settings)
     encode_video(settings)
 
 

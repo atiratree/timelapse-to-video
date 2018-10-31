@@ -52,6 +52,11 @@ class ArgParser:
                             required=False, const=True, default=None,
                             help=f'use x265 encoder with preset 0-8 (ultrafast:low_quality-veryslow:high_quality) (default {DefaultSettings.encoder} encoder with preset {DefaultSettings.encoding_quality} ).')
 
+        parser.add_argument('-z', '--last-frame-freeze', type=positive_float, nargs='?',
+                            dest='last_frame_freeze',
+                            required=False, const=True, default=DefaultSettings.last_frame_freeze,
+                            help=f'freeze last frame of video (default {DefaultSettings.last_frame_freeze} sec)')
+
         parser.add_argument('-l', '--latitude', type=float, nargs='?',
                             dest='latitude',
                             required=False, const=True, default=DefaultSettings.latitude,
@@ -104,4 +109,5 @@ class ArgParser:
             threads=args.threads,
             encoder=encoder,
             encoding_quality=encoding_quality,
+            last_frame_freeze=args.last_frame_freeze,
         )

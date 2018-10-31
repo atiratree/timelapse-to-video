@@ -1,7 +1,7 @@
 import os
 import multiprocessing
 
-from operation.utils import is_file_processable, get_new_filename
+from operation.utils import is_file_processable, get_new_filename, get_file_name_and_id
 
 from util.utils import eprint, file_in_dir, natural_sorted, print_progress_bar
 
@@ -24,6 +24,24 @@ class ProcessConfig:
             self.files_processed.value += 1
             print_progress_bar(self.files_processed.value, self.files_count, prefix='Processing input files:',
                                suffix='Complete', length=50)
+
+
+def repeat_last_frame(settings):
+    linked_files = natural_sorted(os.listdir(settings.link_dir))
+    if len(linked_files) == 0:
+        return
+
+    last_file = linked_files[-1]
+    last_file_full_path = file_in_dir(settings.link_dir, last_file)
+    _, last_file_id = get_file_name_and_id(last_file)
+
+    number_of_digits = len(last_file_id)
+    last_file_id = int(last_file_id)
+
+    for i in range(1, int(settings.framerate * settings.last_frame_freeze) + 1):
+        new_filename = get_new_filename(last_file, number_of_digits, override_id=last_file_id + i)  # 7 just to be sure
+        linked_file = file_in_dir(settings.link_dir, new_filename)
+        os.symlink(last_file_full_path, linked_file)
 
 
 def process_input_files(settings):

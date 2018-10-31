@@ -44,22 +44,30 @@ def is_file_processable(file, settings):
     return True
 
 
-def get_new_filename(file, number_of_digits):
+def get_file_name_and_id(file):
     filename, extension = filename_and_extension(file)
-    result = None
+    name = None
+    number = None
 
     reg_res = _FILENAME_REGEX.match(filename)
-    if not reg_res:
-        return result
+    if reg_res:
+        name = reg_res.group(1).strip()
+        number = reg_res.group(2).strip()
 
-    name = reg_res.group(1).strip()
-    number = reg_res.group(2).strip()
+    return name, number
+
+
+def get_new_filename(file, number_of_digits, override_id=None):
+    _, extension = filename_and_extension(file)
+    name, number = get_file_name_and_id(file)
 
     if not name:
         name = ''
 
-    if not number:
-        return result
+    if override_id:
+        number = str(override_id)
+    elif not number:
+            return None
 
     sufficient_number_of_digits = len(number) >= number_of_digits
     return file if sufficient_number_of_digits else f'{name}{number.zfill(number_of_digits)}{extension}'

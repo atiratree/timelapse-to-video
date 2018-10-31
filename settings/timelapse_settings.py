@@ -13,6 +13,7 @@ class DefaultSettings:
 
     audio_file = None
     audio_start = 0.0
+    last_frame_freeze = 0.0
 
     image_extension = 'jpg'
     output_extension = 'mkv'
@@ -46,6 +47,7 @@ class Settings:
 
                  audio_file=DefaultSettings.audio_file,
                  audio_start=DefaultSettings.audio_start,
+                 last_frame_freeze=DefaultSettings.last_frame_freeze,
 
                  image_extension=DefaultSettings.image_extension,
                  output_extension=DefaultSettings.output_extension,
@@ -71,6 +73,7 @@ class Settings:
 
         self.audio_file = audio_file
         self.audio_start = audio_start
+        self.last_frame_freeze = last_frame_freeze
 
         self.image_extension = image_extension
         self.output_extension = output_extension
